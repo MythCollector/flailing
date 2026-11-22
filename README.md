@@ -20,6 +20,7 @@ Can you control it, while not getting eliminated?
 The game runs using Node.js, Express, and Socket.IO.
 
 Go to the [game page](https://you-ll-see.onrender.com/)
+Or here [Vercel](https://flailing.vercel.app/)
 And enjoy!
 
 ## About
