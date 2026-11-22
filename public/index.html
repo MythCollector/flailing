@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b14">
+    <title>FLAILING</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="game"></canvas>
+   
+    <div class="screen-layer">  
+        <section id="menu" class="screen">
+            <div class="brand">
+                <div class="brand-mark">
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="brand-name">FLAILING<span>.</span></div>
+            </div>
+
+            <div class="menu-content">
+                <div class="eyebrow"><span class="pulse-dot"></span> Multiplayer Chaos!! </div>
+                <h1>Swinging Game!<br></h1>
+                <p class="subtitle">This is the game you can use to end that one friendship..</p>
+
+                <div class="menu-card">
+                    <div class="name-field">
+                        <label for="playerName">your name</label>
+                        <input id="playerName" type="text" maxlength="16" placeholder="Enter your name" autocomplete="off">
+                    </div>
+
+                    <button id="createButton" class="primary-button">
+                        <span>Create room</span>
+                        <span class="button-arrow">↗</span>
+                    </button>
+
+                    <div class="divider"><span>Or join a fight</span></div>
+
+                    <div class="join-row">
+                        <input id="roomCodeInput" type="text" maxlength="4" placeholder="ROOM CODE" autocomplete="off">
+                        <button id="joinButton" class="secondary-button">Join <span>→</span></button>
+                    </div>
+
+                    <div id="menuStatus" class="status-message"></div>
+                </div>
+
+                <div class="controls-hint">
+                    <div class="key-group">
+                        <div class="key">W</div>
+                        <div class="key-row">
+                            <div class="key">A</div>
+                            <div class="key">S</div>
+                            <div class="key">D</div>
+                        </div>
+                    </div>
+                    <span>Move</span>
+                    <span class="hint-divider"></span>
+                    <span>Your flail moves with you!</span>
+                </div>
+            </div>
+
+            <div class="menu-footer">
+                <span>Mythos Studios</span>
+                
+            </div>
+        </section>
+
+        <section id="lobby" class="screen hidden">
+            <div class="lobby-topbar">
+                <div class="brand-name small">Flailing!<span>.</span></div>
+                <div class="connection-indicator"><span class="pulse-dot"></span> CONNECTED</div>
+            </div>
+
+            <div class="lobby-content">
+                <div class="eyebrow">Waiting for Start?</div>
+                <h2>The <span>Lobby</span></h2>
+
+                <div class="room-code-panel">
+                    <div class="room-code-label">ROOM CODE</div>
+                    <div class="room-code-display">
+                        <span id="roomCodeDisplay">----</span>
+                        <button id="copyCodeButton" class="copy-button" title="Copy room code">COPY</button>
+                    </div>
+                    <div class="room-code-caption">Share this code with your friends</div>
+                </div>
+
+                <div class="lobby-grid">
+                    <div class="players-panel">
+                        <div class="panel-heading">
+                            <span>Players</span>
+                            <span id="playerCount">0 / 5</span>
+                        </div>
+                        <div id="playerList" class="player-list"></div>
+                    </div>
+
+                    <div class="settings-panel">
+                        <div class="panel-heading">Settings</div>
+                        <label for="arenaSizeSelect">Arena Size</label>
+                        <select id="arenaSizeSelect">
+                            <option value="large">Large</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="small">Smol</option>
+                        </select>
+                        <div class="setting-description">Smaller arenas mean faster eliminations.</div>
+
+                        <div class="lobby-tip">
+                            <span class="tip-icon">✳</span>
+                            <div>
+                                <strong>TIP</strong>
+                                <p>Keep moving, Your flail gets stronger with momentum.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lobby-actions">
+                    <button id="readyButton" class="secondary-button ready-button">Ready?</button>
+                    <button id="startButton" class="primary-button start-button">Start Game<span>↗</span></button>
+                    <button id="leaveButton" class="text-button">Leave lobby</button>
+                </div>
+
+                <div id="lobbyStatus" class="status-message"></div>
+            </div>
+        </section>
+
+        <section id="results" class="screen hidden">
+            <div class="results-content">
+                <div class="eyebrow"><span class="pulse-dot"></span>Match Over</div>
+                <h1 id="resultTitle">VICTORY!!!</h1>
+                <p id="resultSubtitle">The crown belongs to you!</p>
+
+                <div class="results-panel">
+                    <div class="panel-heading">MATCH RESULTS</div>
+                    <div id="resultsList" class="results-list"></div>
+                </div>
+
+                <div class="results-actions">
+                    <button id="rematchButton" class="primary-button">Rematch<span>↗</span></button>
+                    <button id="resultsLeaveButton" class="secondary-button">Return to Menu</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="gameHud" class="game-hud hidden">
+        <div class="hud-top">
+            <div class="hud-logo">FLAILING<span>.</span></div>
+            <div class="hud-alive"><span class="pulse-dot"></span><span id="aliveCount">5</span> Remaining</div>
+            <div id="phaseLabel" class="hud-phase">Arena Closing Soon</div>
+        </div> 
+
+        <div id="gamePlayerStats" class="game-player-stats"></div>
+
+        <div class="hud-bottom">
+            <div class="hud-controls">W A S D <span>Or Arrow Keys</span></div>
+            <button id="gameLeaveButton" class="hud-leave-button">Leave Match</button>
+        </div> 
+    </div> 
+  
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+<script src="game.js"></script>
+</body>      
+</html>
+     
